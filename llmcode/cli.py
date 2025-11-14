@@ -22,6 +22,14 @@ from .tools.file_tools import ReadTool, WriteTool, EditTool
 from .tools.bash_tool import BashTool
 from .tools.search_tools import GlobTool, GrepTool
 from .tools.web_tools import WebSearchTool, WebFetchTool
+from .tools.node_tools import NpmInstallTool, PackageJsonTool, NpmRunTool
+from .tools.scaffold_tools import (
+    CreateReactAppTool, CreateVueAppTool, CreateExpressAppTool, CreateFullStackAppTool
+)
+from .tools.database_tools import MongoDBSetupTool, RedisSetupTool, PostgreSQLSetupTool
+from .tools.docker_tools import DockerfileGeneratorTool, DockerComposeTool, DockerCommandTool
+from .tools.security_tools import JWTAuthSetupTool, RateLimitSetupTool, CORSSetupTool
+from .tools.api_tools import APIEndpointGeneratorTool, SwaggerSetupTool
 
 
 console = Console()
@@ -65,6 +73,36 @@ class LLMCodeCLI:
         if self.config.serper_api_key:
             self.tool_registry.register(WebSearchTool(self.config.serper_api_key))
         self.tool_registry.register(WebFetchTool())
+
+        # Node.js/NPM tools
+        self.tool_registry.register(NpmInstallTool(str(self.working_directory)))
+        self.tool_registry.register(PackageJsonTool(str(self.working_directory)))
+        self.tool_registry.register(NpmRunTool(str(self.working_directory)))
+
+        # Project scaffolding tools
+        self.tool_registry.register(CreateReactAppTool(str(self.working_directory)))
+        self.tool_registry.register(CreateVueAppTool(str(self.working_directory)))
+        self.tool_registry.register(CreateExpressAppTool(str(self.working_directory)))
+        self.tool_registry.register(CreateFullStackAppTool(str(self.working_directory)))
+
+        # Database tools
+        self.tool_registry.register(MongoDBSetupTool(str(self.working_directory)))
+        self.tool_registry.register(RedisSetupTool(str(self.working_directory)))
+        self.tool_registry.register(PostgreSQLSetupTool(str(self.working_directory)))
+
+        # Docker tools
+        self.tool_registry.register(DockerfileGeneratorTool(str(self.working_directory)))
+        self.tool_registry.register(DockerComposeTool(str(self.working_directory)))
+        self.tool_registry.register(DockerCommandTool(str(self.working_directory)))
+
+        # Security tools
+        self.tool_registry.register(JWTAuthSetupTool(str(self.working_directory)))
+        self.tool_registry.register(RateLimitSetupTool(str(self.working_directory)))
+        self.tool_registry.register(CORSSetupTool(str(self.working_directory)))
+
+        # API tools
+        self.tool_registry.register(APIEndpointGeneratorTool(str(self.working_directory)))
+        self.tool_registry.register(SwaggerSetupTool(str(self.working_directory)))
 
     def print_welcome(self):
         """Print welcome message"""
